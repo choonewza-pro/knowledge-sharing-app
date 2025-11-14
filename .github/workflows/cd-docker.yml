@@ -25,8 +25,9 @@ jobs:
   auto-deploy-docker-job:
     runs-on: ubuntu-latest
     needs: build-and-push-docker-image
+    environment: production
     env:
-      SERVER_IP: "157.90.230.179"
+      SERVER_IP: "139.180.223.248"
       SERVER_USER: ${{ secrets.SERVER_USER}}
       SERVER_PASSWORD:  ${{ secrets.SERVER_PASSWORD}}
       SERVER_PORT: 22
