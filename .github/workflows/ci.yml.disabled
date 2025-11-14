@@ -1,0 +1,85 @@
+name: Check and Build Application (CI)
+
+on:
+  push:
+    branches:
+      - "feature/**"
+      - "hotfix/**"
+      - "fix/**"
+      - "bugfix/**"
+      - "chore/**"
+      - "docs/**"
+      - "refactor/**"
+      - "style/**"
+      - "test/**"
+      - "perf/**"
+      - "build/**"
+      - "ci/**"
+      - "revert/**"
+      - main # อย่าลืมลบออก กรณีใช้งานจริง
+  # pull_request: # ใช้เพื่อกรณี pull request แล้ว error ก็จะได้ไม่ต้อง merge เข้าสาขาหลัก (main)
+  #   branches:
+  #     - main
+
+jobs:
+  lint-job:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Hello, ${{ github.actor }}"
+
+      - uses: actions/checkout@v5
+
+      - name: Set Node.js version to 24.x
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24.x'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check lint
+        run: npm run lint
+  
+  # build-job:
+  #   runs-on: ubuntu-latest
+  #   needs: lint-job
+  #   steps:
+  #     - run: echo "Hello, ${{ github.actor }}"
+
+  #     - uses: actions/checkout@v5
+
+  #     - name: Set Node.js version to 24.x
+  #       uses: actions/setup-node@v6
+  #       with:
+  #         node-version: '24.x'
+  #         cache: 'npm'
+
+  #     - name: Install dependencies
+  #       run: npm ci
+
+  #     - name: Check build app
+  #       run: npm run build
+
+  # build-job-matrix:
+  #   runs-on: ubuntu-latest
+  #   needs: lint-job
+  #   strategy:
+  #     matrix:
+  #       # os: [ubuntu-latest, windows-latest, macos-latest]
+  #       os: [ubuntu-latest]
+  #       node-version: [20.x, 22.x, 24.x]
+  #   steps:
+  #     - uses: actions/checkout@v5
+
+  #     - name: Set Node.js version to ${{ matrix['node-version'] }}
+  #       uses: actions/setup-node@v6
+  #       with:
+  #         node-version: ${{ matrix['node-version'] }}
+  #         cache: 'npm'
+
+  #     - name: Install dependencies
+  #       run: npm ci
+
+  #     - name: Check build app
+  #       run: npm run build
