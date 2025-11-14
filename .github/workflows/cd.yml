@@ -7,6 +7,10 @@ on:
     tags:
       - "*.*.*" # ติดตั้ง workflow นี้ให้ทำงานเมื่อมีการ push tag ที่มีรูปแบบ x.y.z ตอน Release ใหม่
 
+# permissions:
+#   contents: write    # ให้สิทธิ์เขียน (push) commit
+#   pages: write       # ถ้าใช้ pages:deploy
+#   id-token: write    # ถ้าใช้ deployment ใหม่ของ GitHub Pages
 
 jobs:
   build-prod-job:
