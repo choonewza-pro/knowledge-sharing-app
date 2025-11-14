@@ -31,11 +31,12 @@ jobs:
       SERVER_PASSWORD:  ${{ secrets.SERVER_PASSWORD}}
       SERVER_PORT: 22
       CONTAINER_NAME: ${{ github.actor}}
-      CONTAINER_PORT: 7354
+      SERVER_RUN_PORT: 7354
       DOCKER_IMAGE_URL: "ghcr.io/${{ github.actor }}/${{ github.repository.name }}:${{ github.ref_name }}"
+      DOCKER_IMAGE_URL_NO_TAG: "ghcr.io/${{ github.actor }}/${{ github.repository.name }}"
       # ใช้จริงต้องเก็บใน GitHub Secrets นะครับ
     steps:
-      - run: echo "Hello, ${{ github.actor }} from auto deploy docker job"
+      - run: echo "Hello, ${{ github.actor }} from auto deploy docker job" 
       - name: Auto Deploy Docker Container
         uses: appleboy/ssh-action@v1.2.3
         with:
@@ -45,3 +46,8 @@ jobs:
           port: ${{ env.SERVER_PORT }}
           script: |
             docker -v
+            docker logout ghcr.io
+            docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }} ${{ env.DOCKER_IMAGE_URL_NO_TAG}}
+            docker rm -f ${{ env.CONTAINER_NAME }} || true
+            docker pull ${{ env.DOCKER_IMAGE_URL }}
+            docker run --restart=always -d --name ${{ env.CONTAINER_NAME }} -p ${{ env.SERVER_RUN_PORT }}:80 ${{ env.DOCKER_IMAGE_URL }}
