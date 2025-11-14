@@ -27,8 +27,8 @@ jobs:
     needs: build-and-push-docker-image
     env:
       SERVER_IP: "157.90.230.179"
-      SERVER_USER: "root"
-      SERVER_PASSWORD: "bF9NN4xqsbmb"
+      SERVER_USER: ${{ secrets.SERVER_USER}}
+      SERVER_PASSWORD:  ${{ secrets.SERVER_PASSWORD}}
       SERVER_PORT: 22
       CONTAINER_NAME: ${{ github.actor}}
       CONTAINER_PORT: 7354
