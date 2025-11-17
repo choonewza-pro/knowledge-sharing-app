@@ -2,8 +2,8 @@ name: Deploy to GitHub Pages (CD) 2
 
 on:
   push:
-    branches:
-      - main # [ลบออกเมื่อใช้จริง]  # ติดตั้ง workflow นี้ให้ทำงานเมื่อมีการ push เข้าสาขาหลัก (main)
+    # branches:
+    #   - main # [ลบออกเมื่อใช้จริง]  # ติดตั้ง workflow นี้ให้ทำงานเมื่อมีการ push เข้าสาขาหลัก (main)
     tags:
       - "*.*.*" # ติดตั้ง workflow นี้ให้ทำงานเมื่อมีการ push tag ที่มีรูปแบบ x.y.z ตอน Release ใหม่
 
