@@ -6,9 +6,11 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "build:local": "tsc -b && vite build --base /",
     "lint": "eslint .",
     "preview": "vite preview",
-    "start": "npx serve -s dist -l 5000"
+    "start": "npx serve -s dist -l 5000",
+    "start:local": "npm run build:local && npx serve -s dist -l 5000"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.4",
